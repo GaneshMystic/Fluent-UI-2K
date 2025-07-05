@@ -5,9 +5,7 @@ import minify from '@node-minify/core';
 import cssnano from '@node-minify/cssnano';
 import * as fs from 'fs/promises';
 import * as path from 'path';
-import * as Url from 'url';
 import * as vscode from 'vscode';
-import { nanoid } from 'nanoid';
 import { RequestInfo, RequestInit } from 'node-fetch';
 
 import {
@@ -41,15 +39,15 @@ function reloadWindow() {
     vscode.commands.executeCommand('workbench.action.reloadWindow');
 }
 
-const minifyCss = async (css: Buffer) => {
-    try {
-        const output = await postcss([cssnano]).process(css);
+// const minifyCss = async (css: Buffer) => {
+//     try {
+//         const output = await postcss([cssnano]).process(css);
 
-        return output.css;
-    } catch (error) {
-        vscode.window.showErrorMessage(error);
-    }
-};
+//         return output.css;
+//     } catch (error) {
+//         vscode.window.showErrorMessage(String(error));
+//     }
+// };
 
 /**
  * Removes injected files from workbench.html file
@@ -84,7 +82,7 @@ async function buildCSSTag(url: string, useThemeColors?: boolean) {
 
         return `<style>${mini}</style>\n`;
     } catch (error) {
-        vscode.window.showErrorMessage(error);
+        vscode.window.showErrorMessage(String(error));
         vscode.window.showWarningMessage(messages.cannotLoad + url);
     }
 }
@@ -118,8 +116,8 @@ async function getCSSTag() {
 
     let encodedImage: boolean | string = false;
 
-    if (enableBg) {
-        encodedImage = await getBase64Image(bgURL);
+    if (enableBg && bgURL) {
+        encodedImage = await getBase64Image(String(bgURL));
     }
 
     let res = '';
@@ -178,7 +176,7 @@ async function buildJsFile(jsFile: string) {
 
         return;
     } catch (error) {
-        vscode.window.showErrorMessage(error);
+        vscode.window.showErrorMessage(String(error));
     }
 }
 
@@ -216,9 +214,11 @@ async function patch({ htmlFile, jsFile, bypassMessage }: PatchArgs) {
 }
 
 export function activate(context: vscode.ExtensionContext) {
-    const appDir = path.dirname(require!.main!.filename);
+    const config = vscode.workspace.getConfiguration('fluent-ui-vscode');
+    let appDir = String(config.get('vscodePath'));
 
-    const base = path.join(appDir, 'vs', 'code');
+    appDir = path.join(appDir, 'resources', 'app');
+    const base = path.join(appDir, 'out', 'vs', 'code');
     const htmlFile = path.join(base, CONTAINER, 'workbench', 'workbench.html');
     const htmlBakFile = path.join(base, CONTAINER, 'workbench', 'workbench.fui');
     const jsFile = path.join(base, CONTAINER, 'workbench', 'fui.js');
@@ -250,7 +250,7 @@ export function activate(context: vscode.ExtensionContext) {
             await restoreBackup(backupPath, htmlFile);
             await deleteBackupFiles(htmlBakFile, jsFile);
         } catch (error) {
-            vscode.window.showErrorMessage(error);
+            vscode.window.showErrorMessage(String(error));
         }
     }
 

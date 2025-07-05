@@ -27,6 +27,7 @@
     },
     "main": "./out/extension.js",
     "contributes": {
+        
         "commands": [
             {
                 "command": "fluent-ui-vscode.enableEffects",
@@ -43,7 +44,7 @@
         ],
         "configuration": {
             "title": "Fluent UI",
-            "type": "object",
+            "type": "object",            
             "properties": {
                 "fluent-ui-vscode.compact": {
                     "type": "boolean",
@@ -55,6 +56,12 @@
                     "type": "boolean",
                     "default": false,
                     "description": "Enable background image",
+                    "scope": "application"
+                },
+                "fluent-ui-vscode.vscodePath": {
+                    "type": "string",
+                    "default": "C:\\Windows\\Web\\Wallpaper\\Windows\\img0.jpg",
+                    "description": "Path to vscode installation folder, ",
                     "scope": "application"
                 },
                 "fluent-ui-vscode.wallpaperPath": {
@@ -117,5 +124,10 @@
         "glob": "^10.2.3",
         "mocha": "^10.2.0",
         "typescript": "^5.0.4"
-    }
+    },
+    "activationEvents": [
+        "onCommand:fluent-ui-vscode.enableEffects",
+        "onCommand:fluent-ui-vscode.reloadEffects",
+        "onCommand:fluent-ui-vscode.disableEffects"
+    ]
 }
