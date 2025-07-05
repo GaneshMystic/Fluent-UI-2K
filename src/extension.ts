@@ -90,7 +90,7 @@ async function buildCSSTag(url: string, useThemeColors?: boolean) {
 export async function getBase64Image(wallPath: string) {
     try {
         if (wallPath) {
-            const blurredImage = await sharp(wallPath).blur(100).toBuffer();
+            const blurredImage = await sharp(wallPath).blur(256).toBuffer();
 
             return `data:image/png;base64,${blurredImage.toString('base64')}`;
         }

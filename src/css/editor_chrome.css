@@ -200,7 +200,6 @@ html {
     border-left: none !important;
     border-right: none !important;
     border-bottom: var(--border) !important;
-    border-radius: var(--border-radius) !important;
     margin-right: var(--s3);
 }
 
@@ -450,7 +449,6 @@ html {
     border-top: 1px solid var(--border-color) !important;
     border-left: 1px solid var(--border-color) !important;
     border-right: 1px solid var(--border-color) !important;
-
     background: var(--noise-bg) repeat var(--card-bg) !important;
 }
 
@@ -526,7 +524,6 @@ html {
 }
 
 .sidebar > .title {
-    height: auto !important;
     background: transparent !important;
     margin-top: var(--s4);
     margin-bottom: var(--s2);
@@ -782,7 +779,12 @@ html {
 .monaco-action-bar .action-item.checked,
 .monaco-action-bar .action-item:hover {
     background: var(--active-action-item-bg) !important;
-    border-radius: var(--s3) !important;
+    border-top-left-radius: var(--border-radius) !important;
+    border-top-right-radius: var(--border-radius) !important;
+}
+.basepanel > .actions-container{
+    gap:4px;
+    padding-left:8px;
 }
 
 .active-item-indicator {
@@ -1058,7 +1060,6 @@ html {
     border-left: 1px solid rgba(255, 255, 255, 0.045) !important;
     border-right: 1px solid rgba(255, 255, 255, 0.045) !important;
     border-bottom: 1px solid var(--border-color) !important;
-    padding: 4px 8px !important;
     transition: border var(--easing-timing-fast) var(--easing-curve-in);
     box-shadow: var(--depth-2);
 }
@@ -1088,7 +1089,7 @@ html {
 }
 
 .monaco-inputbox.synthetic-focus {
-    border-bottom: 2px solid var(--accent-hover) !important;
+    border-bottom: 1px solid var(--accent-hover) !important;
 }
 
 .monaco-inputbox.idle .wrapper {
@@ -1122,7 +1123,7 @@ html {
     backdrop-filter: var(--backdrop-filter);
 }
 
-.context-view.monaco-menu-container {
+.context-view {
     animation: fadeIn var(--easing-timing-fast) var(--easing-curve-in) !important;
 }
 
@@ -1143,12 +1144,8 @@ html {
 
 /* Search & Replace */
 .find-widget {
-    width: calc(100% - 32px) !important;
-    height: 42px !important;
-    max-width: unset !important;
-    box-shadow: var(--flyout-shadow) !important;
-    transition: transform var(--easing-timing-fast) var(--easing-curve-in) !important;
-    align-items: center;
+    border:1px solid var(--vscode-widget-border);
+    border-radius: 4px;
 }
 
 .find-widget .monaco-findInput {
@@ -1156,12 +1153,8 @@ html {
     border-radius: var(--input-border-radius);
 }
 
-.find-widget.replaceToggled {
-    height: 86px !important;
-}
 
 .monaco-editor .find-widget.visible {
-    left: var(--s4);
     transform: translateY(var(--s4)) !important;
 }
 
